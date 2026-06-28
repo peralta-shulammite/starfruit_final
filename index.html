@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Starfruit Express</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:#F7F4EF;min-height:100vh;color:#211F1A;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+.site-header{background:transparent;padding:1.25rem 1.5rem 0;position:sticky;top:0;z-index:100}
+.nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  background:rgba(255,255,255,0.78);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.6);border-radius:999px;padding:0.6rem 0.7rem 0.6rem 1.1rem;
+  box-shadow:0 12px 28px -8px rgba(22,30,23,0.16),0 4px 10px -4px rgba(22,30,23,0.08)}
+.logo{display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
+.logo-star{width:34px;height:34px;background:none;display:flex;align-items:center;justify-content:center;color:#F5C84C;flex-shrink:0;font-size:0}
+.logo-star svg{width:30px;height:30px}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-name{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;color:#211F1A;letter-spacing:0.01em}
+.logo-tag{font-family:'Manrope',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:#6B6358}
+.nav-links{display:flex;align-items:center;gap:2.1rem;flex:none;justify-content:center}
+.nav-links a{font-size:0.78rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#211F1A;position:relative;padding:0.3rem 0;transition:color 0.2s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:#1E7245;transition:width 0.2s ease}
+.nav-links a:hover::after{width:100%}
+.nav-actions{display:flex;align-items:center;gap:0.6rem;flex-shrink:0}
+.nav-cta{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.05rem;background:#F5C84C;color:#211F1A;border-radius:999px;padding:0.5rem 1.2rem;line-height:1.15;box-shadow:0 1px 2px rgba(33,27,18,0.06);transition:background .2s,transform .15s}
+.nav-cta:hover{background:#E8B832;transform:translateY(-1px)}
+.nav-cta-top{font-size:0.56rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;opacity:0.75}
+.nav-cta-bottom{font-size:0.84rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:0.4rem;color:#211F1A}
+.nav-cta-bottom svg{width:14px;height:14px;transition:transform .2s;stroke:#211F1A}
+.nav-cta:hover .nav-cta-bottom svg{transform:translateX(2px)}
+
+@media(max-width:900px){
+  .nav-links{gap:1.1rem}
+  .nav-links a{font-size:0.7rem}
+  .nav-cta{padding:0.45rem 0.9rem}
+  .nav-cta-bottom{font-size:0.74rem}
+}
+@media(max-width:680px){
+  .nav-links{gap:0.7rem}
+  .nav-links a{font-size:0.58rem}
+  .logo-name{font-size:0.95rem}
+  .logo-tag{font-size:0.5rem}
+  .logo-star{width:26px;height:26px}
+  .logo-star svg{width:22px;height:22px}
+}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;min-height:580px;padding:3rem 2rem 3.5rem;background:transparent}
+.hero-bg{position:absolute;top:0;right:0;width:50%;height:100%;pointer-events:none;z-index:0}
+.hero-bg-img{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop');background-size:cover;background-position:center 30%}
+.hero-bg-fade{position:absolute;inset:0;background:linear-gradient(90deg,#F7F4EF 0%,rgba(247,244,239,0.78) 28%,rgba(247,244,239,0.18) 58%,transparent 72%)}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;position:relative;z-index:1;margin-top:1.5rem}
+.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#1E7245;margin-bottom:1rem;display:block}
+.headline{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.4rem,4vw,3.2rem);line-height:1.08;letter-spacing:-0.01em;color:#211F1A;margin-bottom:1.2rem}
+.headline .accent{color:#1E7245}
+.subhead{font-size:0.97rem;line-height:1.65;color:#6B6358;max-width:30rem;margin-bottom:2rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem}
+.btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:#1E7245;color:#fff;border-radius:999px;padding:0.75rem 1.4rem;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s}
+.btn-primary:hover{background:#155C37;transform:translateY(-1px)}
+.btn-primary svg{width:14px;height:14px}
+.btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;background:#fff;color:#211F1A;border-radius:999px;padding:0.75rem 1.4rem;font-weight:600;font-size:0.9rem;border:1.5px solid #E2D9C8;cursor:pointer;transition:border-color 0.2s,transform 0.15s}
+.btn-secondary:hover{border-color:#978E7E;transform:translateY(-1px)}
+
+/* TRUSTED LOGOS */
+.trusted{margin-top:1.5rem}
+.trusted-label{font-size:0.75rem;font-weight:500;letter-spacing:0.02em;color:#978E7E;margin-bottom:1rem}
+.trusted-logos{display:flex;flex-wrap:wrap;gap:0 32px;align-items:center}
+.logo-chip{display:inline-flex;align-items:center;opacity:0.82;transition:opacity 0.2s;cursor:default;list-style:none}
+.logo-chip:hover{opacity:1}
+.logo-chip svg{display:block;overflow:visible}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:480px;padding:2.5rem 3.5rem}
+
+/* DASHBOARD CARD */
+.dashboard-card{position:relative;z-index:2;width:min(400px,100%);background:rgba(255,255,255,0.96);border:1px solid rgba(255,255,255,0.8);border-radius:24px;box-shadow:0 32px 80px -16px rgba(16,29,27,0.20),0 8px 24px -8px rgba(16,29,27,0.10);padding:1.35rem;backdrop-filter:blur(8px);transition:transform 0.25s ease}
+.dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.dash-title{font-weight:700;font-size:0.88rem;color:#211F1A}
+.dash-period{display:flex;align-items:center;gap:0.35rem;background:#fff;border:1.5px solid #E2D9C8;border-radius:999px;padding:0.3rem 0.7rem;font-size:0.73rem;font-weight:600;color:#211F1A;cursor:pointer}
+.dash-period svg{width:8px;height:8px;color:#978E7E}
+.dash-metric-card{background:#101D2B;border-radius:16px;padding:1.1rem 1.25rem 0;margin-bottom:0.85rem;overflow:hidden}
+.dash-metric-label{font-size:0.72rem;color:rgba(255,255,255,0.6);margin-bottom:0.25rem;display:block}
+.dash-metric-value{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;color:#fff;letter-spacing:-0.01em;display:block}
+.dash-metric-delta{display:inline-flex;align-items:center;gap:0.25rem;font-size:0.72rem;font-weight:700;color:#46A86C;margin-top:0.25rem}
+.dash-metric-delta svg{width:9px;height:9px}
+.sparkline{display:block;width:100%;height:58px;margin-top:0.5rem}
+.spark-line{stroke:#46A86C;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:500;stroke-dashoffset:500;transition:stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1) 0.3s}
+.spark-line.drawn{stroke-dashoffset:0}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:0.85rem}
+.kpi{background:#F2F4F3;border-radius:12px;padding:0.7rem 0.75rem}
+.kpi-label{font-size:0.65rem;color:#6B6358;margin-bottom:0.2rem}
+.kpi-value{font-weight:700;font-size:1.1rem;color:#211F1A}
+.kpi-delta{font-size:0.63rem;font-weight:700;color:#1E7245;margin-top:0.1rem}
+.kpi-delta.neutral{color:#978E7E}
+.shipment-row{display:flex;align-items:center;gap:0.7rem;background:#F2F4F3;border-radius:12px;padding:0.7rem 0.85rem}
+.shipment-icon{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:10px;color:#1E7245}
+.shipment-icon svg{width:18px;height:18px}
+.shipment-text{flex:1;min-width:0}
+.shipment-text strong{font-size:0.8rem;display:block}
+.shipment-text span{font-size:0.7rem;color:#6B6358}
+.shipment-link{font-size:0.75rem;font-weight:700;color:#1E7245;white-space:nowrap}
+
+/* FLOATING BADGES */
+@keyframes float{0%,100%{transform:translate(var(--bx,0),var(--by,0))}50%{transform:translate(var(--bx,0),calc(var(--by,0) - 7px))}}
+@keyframes badgeFadeIn{from{opacity:0;transform:translate(var(--bx,0),calc(var(--by,0) + 10px))}to{opacity:1;transform:translate(var(--bx,0),var(--by,0))}}
+.badge{position:absolute;display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.95rem 0.5rem 0.4rem;background:#fff;border:none;border-radius:999px;box-shadow:0 8px 24px -6px rgba(16,29,27,0.16),0 2px 6px -2px rgba(16,29,27,0.08);font-size:0.74rem;font-weight:700;color:#211F1A;white-space:nowrap;z-index:3;cursor:default;opacity:0;animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) forwards, float 5s ease-in-out infinite;transition:box-shadow 0.25s ease}
+.badge:hover{box-shadow:0 10px 28px -6px rgba(16,29,27,0.20);animation-play-state:running,paused}
+.badge-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.badge-dot svg{width:13px;height:13px}
+.badge-green .badge-dot{background:#fff;color:#1E7245;box-shadow:inset 0 0 0 1px rgba(30,114,69,0.18)}
+.badge-amber .badge-dot{background:#fff;color:#C07B1A;box-shadow:inset 0 0 0 1px rgba(192,123,26,0.18)}
+.badge-navy  .badge-dot{background:#fff;color:#1A3A5C;box-shadow:inset 0 0 0 1px rgba(26,58,92,0.18)}
+.badge-teal  .badge-dot{background:#fff;color:#1A7A62;box-shadow:inset 0 0 0 1px rgba(26,122,98,0.18)}
+.badge-1{top:2%;left:6%;--bx:-38%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-2{top:42%;left:0;--bx:-58%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-3{top:2%;right:6%;--bx:42%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-4{bottom:6%;right:4%;--bx:38%;--by:50%;transform:translate(var(--bx),var(--by))}
+.badge-1{animation-delay:0.10s,0.80s}
+.badge-2{animation-delay:0.25s,0.80s}
+.badge-3{animation-delay:0.40s,0.80s}
+.badge-4{animation-delay:0.55s,0.80s}
+
+/* STATS BAR */
+.stats-bar{padding:0 2rem 4rem;margin-top:-1rem;position:relative;z-index:2}
+.stats-grid{max-width:1200px;margin:0 auto;background:rgba(255,252,248,0.90);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(220,210,195,0.5);border-radius:20px;box-shadow:0 8px 28px -8px rgba(22,30,23,0.08);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{display:flex;align-items:center;gap:0.85rem;padding:1.5rem 1.6rem;border-right:1px solid rgba(220,210,195,0.5)}
+.stat:last-child{border-right:none}
+.stat-icon{width:32px;height:32px;flex-shrink:0;color:#D9912E}
+.stat:last-child .stat-icon{color:#2F8F6F}
+.stat-num{font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;color:#211F1A;line-height:1}
+.stat-label{font-size:0.76rem;color:#6B6358;margin-top:0.2rem}
+
+/* HERO RESPONSIVE */
+@media(max-width:1080px){.badge-1,.badge-2{left:-2%}.badge-3,.badge-4{right:-2%}}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{margin-top:2rem;padding:3.5rem 1rem 2rem}
+  .badge{position:relative;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) both!important}
+  .badges-top,.badges-bottom{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;width:100%;margin:0 auto}
+  .badges-top{margin-bottom:1rem}
+  .badges-bottom{margin-top:1rem}
+  .hero-bg{width:100%;height:300px;top:auto;bottom:0}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid rgba(220,210,195,0.5)}
+}
+@media(max-width:600px){
+  .site-header{padding:1rem 0.75rem 0}
+  .nav{padding:0.5rem 0.5rem 0.5rem 0.85rem;gap:0.6rem}
+  .hero-visual{padding:2rem 0.5rem 1.5rem}
+  .stats-grid{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:1px solid rgba(220,210,195,0.5)}
+  .stat:last-child{border-bottom:none}
+}
+
+/* ─────────────────────────────────────────
+   SECTION DIVIDER
+───────────────────────────────────────── */
+.section-divider{
+  max-width:1200px;margin:0 auto;
+  height:1px;background:linear-gradient(90deg,transparent,#E2D9C8 20%,#E2D9C8 80%,transparent);
+}
+
+/* ─────────────────────────────────────────
+   PROBLEM SECTION
+───────────────────────────────────────── */
+.problems{padding:5rem 2rem 6rem;position:relative;overflow:hidden}
+.problems::before{
+  content:"";position:absolute;top:-120px;left:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(30,114,69,0.06) 0%,transparent 70%);
+  pointer-events:none
+}
+.problems-inner{max-width:1200px;margin:0 auto}
+
+.section-header{text-align:center;max-width:680px;margin:0 auto 5rem}
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  color:#1E7245;margin-bottom:1.1rem
+}
+.section-eyebrow-line{width:28px;height:1.5px;background:#1E7245;border-radius:2px}
+.section-title{
+  font-family:'Fraunces',serif;font-weight:500;
+  font-size:clamp(2rem,3.8vw,2.9rem);line-height:1.1;
+  letter-spacing:-0.01em;color:#211F1A;margin-bottom:1rem
+}
+.section-title em{font-style:italic;color:#1E7245}
+.section-desc{font-size:1rem;line-height:1.65;color:#6B6358}
+
+.part-label{
+  display:flex;align-items:center;gap:0.6rem;
+  font-size:0.68rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:#978E7E;margin-bottom:1.25rem
+}
+.part-label-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  border:1.5px solid #E2D9C8;
+  font-size:0.6rem;font-weight:800;color:#978E7E
+}
+
+.block-headline{
+  font-family:'Fraunces',serif;font-weight:500;
+  font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.12;
+  letter-spacing:-0.01em;color:#211F1A;margin-bottom:1rem
+}
+.block-headline em{font-style:italic;color:#1E7245}
+.block-desc{font-size:0.96rem;line-height:1.65;color:#6B6358;max-width:28rem;margin-bottom:2rem}
+
+.friction-block{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+  margin-bottom:5rem;padding-bottom:5rem;
+  border-bottom:1px solid #E2D9C8
+}
+.friction-copy{order:1}
+.friction-visual{order:2}
+.friction-caption{font-size:0.8rem;color:#978E7E;text-align:center;max-width:380px;margin:1.25rem auto 0;line-height:1.5}
+
+.chaos-stack{position:relative;height:340px}
+.chaos-card{position:absolute;background:#fff;border-radius:14px;box-shadow:0 8px 28px -8px rgba(22,30,23,0.12),0 2px 8px -4px rgba(22,30,23,0.06);border:1px solid #EDE8DF;overflow:hidden}
+
+.card-chat{width:240px;left:0;top:0;transform:rotate(-2deg);padding:0.85rem 0.9rem;animation:cardFloat1 6s ease-in-out infinite}
+@keyframes cardFloat1{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-5px)}}
+.chat-bar{display:flex;align-items:center;gap:0.5rem;padding-bottom:0.7rem;border-bottom:1px solid #F0ECE5;margin-bottom:0.75rem}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:#E2D9C8}
+.chat-title-label{font-size:0.65rem;font-weight:700;color:#978E7E;letter-spacing:0.06em;margin-left:auto}
+.chat-msg{display:flex;flex-direction:column;gap:0.45rem}
+.msg{display:inline-block;padding:0.45rem 0.7rem;border-radius:10px;font-size:0.72rem;font-weight:500;line-height:1.35;max-width:80%}
+.msg-in{background:#F2F4F3;color:#211F1A;border-radius:10px 10px 10px 2px;align-self:flex-start}
+.msg-out{background:#1E7245;color:#fff;border-radius:10px 10px 2px 10px;align-self:flex-end}
+.msg-wrap{display:flex;flex-direction:column;align-items:flex-end}
+.msg-time{font-size:0.58rem;color:#978E7E;margin-top:0.2rem;padding-right:0.2rem}
+
+.card-sheet{width:280px;right:10px;top:24px;transform:rotate(1.5deg);animation:cardFloat2 7s ease-in-out 0.5s infinite}
+@keyframes cardFloat2{0%,100%{transform:rotate(1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-6px)}}
+.sheet-header{background:#F7F4EF;padding:0.5rem 0.75rem;border-bottom:1px solid #EDE8DF;font-size:0.6rem;font-weight:700;color:#978E7E;letter-spacing:0.08em}
+.sheet-table{width:100%;border-collapse:collapse}
+.sheet-table th{font-size:0.58rem;font-weight:700;color:#978E7E;letter-spacing:0.06em;padding:0.35rem 0.6rem;text-align:left;border-bottom:1px solid #EDE8DF;background:#FAFAF8}
+.sheet-table td{font-size:0.67rem;padding:0.35rem 0.6rem;border-bottom:1px solid #F5F1EA;color:#211F1A}
+.sheet-table tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.58rem;font-weight:700}
+.tag-ok{background:#E8F5EE;color:#1E7245}
+.tag-late{background:#FEF3E2;color:#C07B1A}
+.tag-miss{background:#FEE9E7;color:#C0341A}
+
+.card-invoice{width:200px;left:50px;bottom:0;transform:rotate(-1deg);animation:cardFloat3 8s ease-in-out 1s infinite}
+@keyframes cardFloat3{0%,100%{transform:rotate(-1deg) translateY(0)}50%{transform:rotate(-1deg) translateY(-4px)}}
+.invoice-header{background:#101D2B;padding:0.6rem 0.8rem}
+.invoice-header-title{font-size:0.68rem;font-weight:700;color:#fff}
+.invoice-header-sub{font-size:0.58rem;color:rgba(255,255,255,0.5);margin-top:0.1rem}
+.invoice-body{padding:0.65rem 0.8rem}
+.invoice-row{display:flex;justify-content:space-between;align-items:center;font-size:0.65rem;padding:0.22rem 0;border-bottom:1px solid #F5F1EA}
+.invoice-row:last-child{border-bottom:none}
+.invoice-row-label{color:#6B6358}
+.invoice-row-val{font-weight:700;color:#211F1A}
+.invoice-row.flagged .invoice-row-val{color:#C0341A}
+.invoice-total{margin-top:0.5rem;padding-top:0.5rem;border-top:2px solid #211F1A;display:flex;justify-content:space-between;align-items:center}
+.invoice-total-label{font-size:0.65rem;font-weight:700;color:#211F1A}
+.invoice-total-val{font-size:0.85rem;font-weight:800;color:#211F1A}
+
+.annotation{position:absolute;font-size:0.65rem;font-weight:700;color:#C07B1A;font-family:'Fraunces',serif;font-style:italic;white-space:nowrap;pointer-events:none}
+.ann-1{top:38%;right:0;transform:translateX(15%)}
+.ann-2{bottom:12%;left:38%;transform:translateX(-60%)}
+
+.disparity-block{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.disparity-copy{order:2}
+.disparity-visual{order:1}
+
+.check-list{list-style:none;display:flex;flex-direction:column;gap:0.85rem;margin-top:1.5rem}
+.check-item{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.92rem;color:#211F1A;line-height:1.5}
+.check-icon{width:22px;height:22px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:0.1rem}
+.check-icon-warn{background:#FEF3E2;color:#C07B1A}
+.check-icon-tip{background:#E8F5EE;color:#1E7245}
+.check-icon svg{width:11px;height:11px}
+.check-item strong{color:#211F1A}
+.check-item span{color:#6B6358}
+
+.price-card{background:#fff;border-radius:20px;border:1px solid #EDE8DF;box-shadow:0 12px 40px -12px rgba(22,30,23,0.14);overflow:hidden}
+.price-card-header{background:#F7F4EF;border-bottom:1px solid #EDE8DF;padding:0.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between}
+.price-card-title{font-size:0.72rem;font-weight:700;color:#978E7E;letter-spacing:0.1em;text-transform:uppercase}
+.price-card-badge{display:flex;align-items:center;gap:0.35rem;background:#E8F5EE;border-radius:999px;padding:0.25rem 0.7rem;font-size:0.65rem;font-weight:700;color:#1E7245}
+.price-card-badge svg{width:9px;height:9px}
+.price-card-body{padding:1.25rem 1.2rem}
+.plate-compare{display:flex;align-items:stretch;gap:0;margin-bottom:1.25rem;border-radius:12px;overflow:hidden;border:1px solid #EDE8DF}
+.plate-side{flex:1;padding:1.1rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.5rem}
+.plate-side.without{background:#FAFAF8}
+.plate-side.with{background:#F0F8F3}
+.plate-icon{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto}
+.plate-icon.without-icon{background:#EDE8DF}
+.plate-icon.with-icon{background:#D4EEE0}
+.plate-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#978E7E}
+.plate-price{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem;letter-spacing:-0.01em;line-height:1}
+.plate-price.without-price{color:#978E7E}
+.plate-price.with-price{color:#1E7245}
+.plate-per{font-size:0.67rem;color:#978E7E}
+.plate-divider{width:1px;background:#EDE8DF;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative}
+.plate-vs{position:absolute;width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid #EDE8DF;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:800;color:#6B6358;z-index:1}
+.savings-pill{display:flex;align-items:center;justify-content:center;gap:0.5rem;background:linear-gradient(135deg,#1E7245 0%,#2B9B5F 100%);border-radius:10px;padding:0.9rem 1rem;color:#fff}
+.savings-pill-label{font-size:0.72rem;font-weight:600;opacity:0.8}
+.savings-pill-value{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;letter-spacing:-0.01em}
+.savings-pill-sep{width:1px;height:24px;background:rgba(255,255,255,0.25);margin:0 0.25rem}
+.savings-pill-note{font-size:0.7rem;opacity:0.75}
+
+@media(max-width:900px){
+  .friction-block,.disparity-block{grid-template-columns:1fr}
+  .friction-visual,.disparity-visual{order:-1}
+  .chaos-stack{height:300px}
+  .card-sheet{right:0}
+  .ann-1{display:none}
+  .section-header{margin-bottom:3.5rem}
+}
+@media(max-width:600px){
+  .problems{padding:3.5rem 1.25rem 4rem}
+  .chaos-stack{height:260px}
+  .card-chat{width:200px}
+  .card-sheet{width:220px}
+  .card-invoice{width:170px}
+  .friction-block,.disparity-block{gap:2rem}
+}
+
+/* ─────────────────────────────────────────
+   HOW IT WORKS — FAN FLASHCARDS
+───────────────────────────────────────── */
+.hiw{font-family:'Manrope',sans-serif;background:#F7F4EF;padding:5rem 2rem 5rem;overflow:hidden;position:relative}
+.hiw::before{content:"";position:absolute;top:-80px;right:-120px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,200,76,0.10) 0%,transparent 70%);pointer-events:none}
+.hiw-inner{max-width:1100px;margin:0 auto}
+.hiw-header{text-align:center;margin-bottom:0.75rem}
+.hiw-eyebrow-tag{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#C07B1A;border:1px solid #F5C84C;border-radius:4px;padding:0.25rem 0.65rem;margin-bottom:1rem}
+.hiw-title{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,4vw,2.8rem);line-height:1.08;letter-spacing:-0.01em;color:#211F1A;margin-bottom:0.6rem}
+.hiw-title em{font-style:normal;color:#1E7245}
+.hiw-sub{font-size:0.92rem;color:#6B6358;line-height:1.6;max-width:520px;margin:0 auto 3.5rem}
+
+.fan-stage{position:relative;display:flex;justify-content:center;align-items:center;min-height:540px;margin-bottom:1.5rem}
+
+.fan-card{
+  position:absolute;
+  width:270px;
+  background:#fff;
+  border-radius:22px;
+  border:1px solid #EDE8DF;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+  transition:transform 0.42s cubic-bezier(0.22,1,0.36,1),
+             filter 0.38s ease,
+             opacity 0.35s ease,
+             box-shadow 0.38s ease;
+}
+
+.fc-band{height:5px;width:100%}
+.fc-body{padding:1.3rem 1.3rem 1rem}
+.fc-phase{font-size:0.58rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.45rem}
+.fc-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:600;line-height:1;letter-spacing:-0.03em;color:#F5C84C;display:block;margin-bottom:0.55rem}
+.fc-icon-wrap{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem}
+.fc-icon-wrap svg{width:17px;height:17px}
+.fc-name{font-family:'Fraunces',serif;font-weight:500;font-size:1rem;line-height:1.2;color:#211F1A;margin-bottom:0.45rem}
+.fc-desc{font-size:0.76rem;line-height:1.58;color:#6B6358}
+.fc-desc strong{color:#211F1A;font-weight:700}
+.fc-desc em{color:#C07B1A;font-style:italic;font-weight:700}
+.fc-footer{padding:0.7rem 1.3rem;border-top:1px solid #F0ECE5;display:flex;align-items:center;gap:0.4rem;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1E7245;margin-top:auto}
+.fc-footer svg{width:12px;height:12px;flex-shrink:0}
+
+.fan-c1 .fc-band{background:#F5C84C}
+.fan-c1 .fc-phase{color:#C07B1A}
+.fan-c1 .fc-icon-wrap{background:#FEF3E2;color:#C07B1A}
+.fan-c2 .fc-band{background:#1E7245}
+.fan-c2 .fc-phase{color:#1E7245}
+.fan-c2 .fc-icon-wrap{background:#E8F5EE;color:#1E7245}
+.fan-c3 .fc-band{background:#101D2B}
+.fan-c3 .fc-phase{color:#1A3A5C}
+.fan-c3 .fc-icon-wrap{background:#EBF0F8;color:#1A3A5C}
+.fan-c4 .fc-band{background:#C0341A}
+.fan-c4 .fc-phase{color:#C0341A}
+.fan-c4 .fc-icon-wrap{background:#FEE9E7;color:#C0341A}
+.fan-c4 .fc-footer{color:#C0341A}
+.fan-c4 .fc-num{color:#F5A08C}
+
+.ec-pill{display:inline-flex;align-items:center;gap:0.3rem;background:#FEE9E7;border-radius:999px;padding:0.22rem 0.6rem;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C0341A;margin-bottom:0.55rem}
+.ec-dot{width:5px;height:5px;border-radius:50%;background:#C0341A;animation:ecpulse 1.4s ease-in-out infinite}
+@keyframes ecpulse{0%,100%{opacity:1}50%{opacity:0.25}}
+.ec-labels{display:flex;gap:0.5rem;margin-top:0.5rem}
+.ec-label{font-size:0.57rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#978E7E;border:1px solid #EDE8DF;border-radius:4px;padding:0.16rem 0.4rem}
+
+.fan-hint{text-align:center;font-size:0.72rem;color:#978E7E;letter-spacing:0.04em;margin-top:0.5rem}
+
+@media(max-width:600px){
+  .fan-stage{min-height:0;position:static;display:flex;flex-direction:column;gap:1rem;margin-bottom:1rem}
+  .fan-card{position:relative !important;transform:none !important;filter:none !important;opacity:1 !important;width:100% !important;box-shadow:0 4px 16px rgba(22,30,23,0.08) !important;z-index:1 !important}
+  .fan-hint{display:none}
+}
+
+/* ─────────────────────────────────────────
+   GLOBAL REDUCED MOTION
+───────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .badge{animation:none!important;opacity:1!important}
+  .spark-line{stroke-dashoffset:0}
+  *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<header class="site-header">
+  <nav class="nav">
+    <a href="#" class="logo">
+      <span class="logo-star" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3 6.1 20.5l1.3-6.5-4.9-4.6 6.6-.8z"/>
+        </svg>
+      </span>
+      <div class="logo-text">
+        <span class="logo-name">Starfruit</span>
+        <span class="logo-tag">--- EXPRESS ---</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Solutions</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="nav-cta">
+        <span class="nav-cta-top">Free Consultation</span>
+        <span class="nav-cta-bottom">
+          Contact Us
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-img"></div>
+    <div class="hero-bg-fade"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">The Restaurant's Ally</span>
+      <h1 class="headline">Smarter Purchasing.<br/><span class="accent">Stronger Restaurants.</span></h1>
+      <p class="subhead">We help restaurants save money, simplify operations, and grow stronger with smarter procurement and reliable delivery.</p>
+      <div class="cta-row">
+        <button class="btn-primary">
+          Book a Demo
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="btn-secondary">Explore Solutions</button>
+      </div>
+      <div class="trusted">
+        <p class="trusted-label">Trusted by restaurants across the country</p>
+        <ul class="trusted-logos">
+          <li class="logo-chip" title="Sweetgreen">
+            <svg width="148" height="40" viewBox="0 0 148 40" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="17" stroke="#4a8a5a" stroke-width="1.2" fill="none"/>
+              <circle cx="20" cy="20" r="13" stroke="#4a8a5a" stroke-width="0.6" fill="none"/>
+              <text x="20" y="15.5" text-anchor="middle" font-family="Georgia,serif" font-size="4.8" fill="#4a8a5a" font-weight="700" letter-spacing="1.2">SWEET</text>
+              <path d="M9 19.5 Q20 15 31 19.5" stroke="#4a8a5a" stroke-width="0.7" fill="none"/>
+              <text x="20" y="25" text-anchor="middle" font-family="Georgia,serif" font-size="4.8" fill="#4a8a5a" font-weight="700" letter-spacing="1.2">GREEN</text>
+              <text x="20" y="30.5" text-anchor="middle" font-family="Georgia,serif" font-size="3" fill="#4a8a5a" letter-spacing="0.8">EST. 2007</text>
+              <text x="46" y="26" text-anchor="start" font-family="Georgia,'Times New Roman',serif" font-size="16" fill="#2d5c3a" font-weight="400" letter-spacing="-0.3">sweetgreen</text>
+            </svg>
+          </li>
+          <li class="logo-chip" title="CAVA">
+            <svg width="88" height="40" viewBox="0 0 88 40" xmlns="http://www.w3.org/2000/svg">
+              <text x="4" y="30" font-family="'Arial Black','Arial',sans-serif" font-size="28" fill="#9B1B1B" font-weight="900" letter-spacing="2">CAVA</text>
+            </svg>
+          </li>
+          <li class="logo-chip" title="Fogo de Chão">
+            <svg width="72" height="40" viewBox="0 0 72 40" xmlns="http://www.w3.org/2000/svg">
+              <text x="36" y="13" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#8B1A1A" font-weight="700" letter-spacing="1.8">FOGO</text>
+              <text x="36" y="23.5" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#8B1A1A" font-weight="400" letter-spacing="1.5">DE</text>
+              <text x="36" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#8B1A1A" font-weight="700" letter-spacing="1.8">CHÃO</text>
+            </svg>
+          </li>
+          <li class="logo-chip" title="Shake Shack">
+            <svg width="96" height="40" viewBox="0 0 96 40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 18 Q12 10 21 18" fill="#D4A04A" stroke="none"/>
+              <rect x="3" y="18" width="18" height="10" rx="1.5" fill="none" stroke="#2a2a2a" stroke-width="1.3"/>
+              <rect x="5.5" y="21" width="13" height="2" rx="0.6" fill="#2a2a2a"/>
+              <circle cx="7.5" cy="26" r="1.8" fill="none" stroke="#2a2a2a" stroke-width="1.1"/>
+              <circle cx="16.5" cy="26" r="1.8" fill="none" stroke="#2a2a2a" stroke-width="1.1"/>
+              <text x="28" y="18" font-family="'Arial Black','Arial',sans-serif" font-size="10" fill="#1a1a1a" font-weight="900" letter-spacing="0.5">SHAKE</text>
+              <text x="28" y="31" font-family="'Arial Black','Arial',sans-serif" font-size="10" fill="#1a1a1a" font-weight="900" letter-spacing="0.5">SHACK</text>
+            </svg>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero-visual" id="heroVisual">
+      <div class="badges-top" id="badgesTop" style="display:none"></div>
+      <div class="badge badge-1 badge-green" aria-hidden="true">
+        <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 9L5 6L7 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Smart Procurement
+      </div>
+      <div class="badge badge-2 badge-amber" aria-hidden="true">
+        <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 3.5V8.5M4.5 7C4.5 7.5 5.2 8 6 8C6.8 8 7.5 7.5 7.5 7C7.5 5.8 4.5 6.2 4.5 5C4.5 4.5 5.2 4 6 4C6.6 4 7.2 4.3 7.5 4.7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></span>
+        Cost Savings
+      </div>
+      <div class="badge badge-3 badge-navy" aria-hidden="true">
+        <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><rect x="1" y="4" width="7" height="6" rx="0.8" stroke="currentColor" stroke-width="1.2"/><path d="M8 5.5H9.5L11 7.5V10H8V5.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><circle cx="3" cy="11" r="1.2" fill="currentColor"/><circle cx="9.5" cy="11" r="1.2" fill="currentColor"/></svg></span>
+        Fast Delivery
+      </div>
+      <div class="badge badge-4 badge-teal" aria-hidden="true">
+        <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1V11M1 6H11M3.5 3.5L8.5 8.5M8.5 3.5L3.5 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>
+        Cold Chain
+      </div>
+      <div class="dashboard-card" id="dashCard">
+        <div class="dash-head">
+          <span class="dash-title">Overview</span>
+          <button class="dash-period">
+            This Month
+            <svg viewBox="0 0 8 8" fill="none"><path d="M1.5 3L4 5.5L6.5 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="dash-metric-card">
+          <span class="dash-metric-label">Total Savings</span>
+          <span class="dash-metric-value" id="savingsVal">$0</span>
+          <div class="dash-metric-delta">
+            <svg viewBox="0 0 9 9" fill="none"><path d="M4.5 7V2M2 4.5L4.5 2L7 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            24% vs last month
+          </div>
+          <svg class="sparkline" viewBox="0 0 380 58" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="spfill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#46A86C" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#46A86C" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#spfill)" d="M0 48 C30 46 50 44 80 40 C110 36 130 38 160 32 C190 26 210 22 240 16 C270 10 300 8 330 6 C350 5 365 4 380 2 L380 58 L0 58 Z" opacity="0.6"/>
+            <path class="spark-line" id="sparkLine" d="M0 48 C30 46 50 44 80 40 C110 36 130 38 160 32 C190 26 210 22 240 16 C270 10 300 8 330 6 C350 5 365 4 380 2"/>
+          </svg>
+        </div>
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kpi-label">Orders</div>
+            <div class="kpi-value" data-count="156">0</div>
+            <div class="kpi-delta">↑ 12%</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Deliveries</div>
+            <div class="kpi-value">98%</div>
+            <div class="kpi-delta">On-time</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Suppliers</div>
+            <div class="kpi-value" data-count="42">0</div>
+            <div class="kpi-delta neutral">Active</div>
+          </div>
+        </div>
+        <div class="shipment-row">
+          <div class="shipment-icon">
+            <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="5" width="11" height="9" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M12 7.5H14.5L17 10.5V14H12V7.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4.5" cy="15" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="14" cy="15" r="1.5" stroke="currentColor" stroke-width="1.2"/></svg>
+          </div>
+          <div class="shipment-text">
+            <strong>Delivery arriving in 2 hours</strong>
+            <span>Fresh produce · 32 items</span>
+          </div>
+          <a href="#" class="shipment-link">Track Order →</a>
+        </div>
+      </div>
+      <div class="badges-bottom" id="badgesBottom" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 30 30" fill="none"><path d="M15 5C10 8 6 11 6 16.5C6 21 10 25 15 25C20 25 24 21 24 16.5C24 11 20 8 15 5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 10V20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div class="stat-copy">
+        <div class="stat-num"><span data-count="1000" data-suffix="+">0</span></div>
+        <div class="stat-label">Restaurants Served</div>
+      </div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M9 15.5L13.5 20L21 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="stat-copy">
+        <div class="stat-num">$<span data-count="10" data-suffix="M+">0</span></div>
+        <div class="stat-label">Saved for Restaurants</div>
+      </div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="11" stroke="currentColor" stroke-width="1.6"/><path d="M15 9V15L18.5 17.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="stat-copy">
+        <div class="stat-num"><span data-count="100" data-suffix="+">0</span></div>
+        <div class="stat-label">Hours Saved Every Month</div>
+      </div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 30 30" fill="none"><path d="M15 4L24 8V15C24 20.5 20 25 15 26.5C10 25 6 20.5 6 15V8L15 4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 15L13.5 17.5L19 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="stat-copy">
+        <div class="stat-num">Cold Chain</div>
+        <div class="stat-label">Always Reliable</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PROBLEM SECTION
+══════════════════════════════════════ -->
+<section class="problems">
+  <div class="problems-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">
+        <span class="section-eyebrow-line"></span>
+        The Real Problem
+        <span class="section-eyebrow-line"></span>
+      </div>
+      <h2 class="section-title">What does your typical<br/><em>Tuesday</em> actually look like?</h2>
+      <p class="section-desc">The food arrives. But so do the headaches — chasing vendors, fixing shortages, questioning invoices. The problem was never the produce. It's everything around it.</p>
+    </div>
+
+    <div class="friction-block">
+      <div class="friction-copy">
+        <div class="part-label">
+          <span class="part-label-num">01</span>
+          Operational Friction
+        </div>
+        <h3 class="block-headline">Six tabs, two threads,<br/><em>one invoice</em> you can't trust.</h3>
+        <p class="block-desc">Calling vendors, chasing deliveries, fixing shortages, reacting to last-minute issues — it has quietly become the job. The problem isn't the product. It's the nonstop coordination around it.</p>
+      </div>
+      <div class="friction-visual">
+        <div class="chaos-stack">
+          <div class="chaos-card card-chat">
+            <div class="chat-bar">
+              <span class="chat-dot"></span>
+              <span class="chat-dot" style="background:#E8D5B0"></span>
+              <span class="chat-dot" style="background:#C8DEC8"></span>
+              <span class="chat-title-label">Vendor Chat · Sep</span>
+            </div>
+            <div class="chat-msg">
+              <span class="msg msg-in">hey can u call me?</span>
+              <div class="msg-wrap">
+                <span class="msg msg-out">we're out of basil</span>
+                <span class="msg-time">Delivered · 9:18 AM</span>
+              </div>
+              <span class="msg msg-in">need sub approved before 11 or I can't load the truck</span>
+            </div>
+          </div>
+          <div class="chaos-card card-sheet">
+            <div class="sheet-header">orders_2024.xlsx</div>
+            <table class="sheet-table">
+              <thead>
+                <tr><th>ITEM</th><th>QTY</th><th>DUE</th><th>STATUS</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Tomatoes</td><td>18</td><td>Today</td><td><span class="tag tag-ok">On time</span></td></tr>
+                <tr><td style="color:#C0341A;font-weight:700">#REF!</td><td style="color:#C0341A;font-weight:700">#REF!</td><td style="color:#C0341A;font-weight:700">#REF!</td><td><span class="tag tag-miss">Error</span></td></tr>
+                <tr><td>Basil</td><td>4</td><td>Late</td><td><span class="tag tag-late">Late</span></td></tr>
+                <tr><td>Mozzarella</td><td>3</td><td>—</td><td><span class="tag tag-miss">Backordered</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chaos-card card-invoice">
+            <div class="invoice-header">
+              <div class="invoice-header-title">FRESH VALLEY DIST.</div>
+              <div class="invoice-header-sub">Invoice #3028 — revised</div>
+            </div>
+            <div class="invoice-body">
+              <div class="invoice-row"><span class="invoice-row-label">Roma Tomatoes</span><span class="invoice-row-val">$175.60</span></div>
+              <div class="invoice-row"><span class="invoice-row-label">Mozzarella</span><span class="invoice-row-val">$162.38</span></div>
+              <div class="invoice-row"><span class="invoice-row-label">Basil — not delivered</span><span class="invoice-row-val" style="color:#978E7E;text-decoration:line-through">$9.00</span></div>
+              <div class="invoice-row flagged"><span class="invoice-row-label">Fuel surcharge</span><span class="invoice-row-val">$48.00 ⚑</span></div>
+              <div class="invoice-total"><span class="invoice-total-label">Total Due</span><span class="invoice-total-val">$624.93</span></div>
+            </div>
+          </div>
+          <span class="annotation ann-1">$42.75 fuel charge?? since when??</span>
+          <span class="annotation ann-2">refund status ??? nobody will reply</span>
+        </div>
+        <p class="friction-caption">Six tabs, two threads, one invoice you can't trust. This is the part nobody priced in.</p>
+      </div>
+    </div>
+
+    <div class="disparity-block">
+      <div class="disparity-visual">
+        <div class="price-card">
+          <div class="price-card-header">
+            <span class="price-card-title">Same plate · Price check</span>
+            <span class="price-card-badge">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M4.5 7V2M2 4.5L4.5 2L7 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Smarter Purchasing
+            </span>
+          </div>
+          <div class="price-card-body">
+            <div class="plate-compare">
+              <div class="plate-side without">
+                <div class="plate-icon without-icon">🍽️</div>
+                <div class="plate-label">Without Starfruit</div>
+                <div class="plate-price without-price">$38.42</div>
+                <div class="plate-per">/ per plate</div>
+              </div>
+              <div class="plate-divider"><div class="plate-vs">VS</div></div>
+              <div class="plate-side with">
+                <div class="plate-icon with-icon">⭐</div>
+                <div class="plate-label">With Starfruit</div>
+                <div class="plate-price with-price">$27.16</div>
+                <div class="plate-per">/ per plate</div>
+              </div>
+            </div>
+            <div class="savings-pill">
+              <div>
+                <div class="savings-pill-label">You save</div>
+                <div class="savings-pill-value">$11.26 per plate</div>
+              </div>
+              <div class="savings-pill-sep"></div>
+              <div class="savings-pill-note">Same dish.<br/>Smarter sourcing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="disparity-copy">
+        <div class="part-label">
+          <span class="part-label-num">02</span>
+          Price Disparity
+        </div>
+        <h3 class="block-headline">The restaurant next door<br/>might be <em>paying less</em> than you.</h3>
+        <p class="block-desc">Same products. Same market. Very different prices. Without visibility, you're guessing — and every guess costs you margin.</p>
+        <ul class="check-list">
+          <li class="check-item">
+            <span class="check-icon check-icon-warn"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 3.5V6.5M5.5 7.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+            <span><strong>No one has time</strong> to constantly shop every supplier.</span>
+          </li>
+          <li class="check-item">
+            <span class="check-icon check-icon-warn"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 3.5V6.5M5.5 7.5V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+            <span><strong>There may be a better price somewhere</strong> — but who has time to chase it every week?</span>
+          </li>
+          <li class="check-item">
+            <span class="check-icon check-icon-tip"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><strong>Starfruit monitors prices across suppliers</strong> and automatically surfaces the best deal for every item on your list.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     HOW IT WORKS — FAN FLASHCARDS
+══════════════════════════════════════ -->
+<section class="hiw">
+  <div class="hiw-inner">
+    <div class="hiw-header">
+      <div class="hiw-eyebrow-tag">[ How It Works ]</div>
+      <h2 class="hiw-title">More Profit. Less Stress.<br/>One <em>Powerful Platform</em></h2>
+      <p class="hiw-sub">Built for restaurant teams. Purchasing and delivery handled — you focus on the plate.</p>
+    </div>
+
+    <div class="fan-stage" id="fanStage">
+
+      <div class="fan-card fan-c1" data-index="0">
+        <div class="fc-band"></div>
+        <div class="fc-body">
+          <div class="fc-phase">Discovery</div>
+          <span class="fc-num">01</span>
+          <div class="fc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <div class="fc-name">Find Hidden Profit</div>
+          <p class="fc-desc">We review your menu costs, order history, and purchasing patterns to surface where the kitchen may be <em>overpaying</em> or missing <strong>better buying opportunities</strong>.</p>
+        </div>
+        <div class="fc-footer">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7L5.5 10L11.5 4"/></svg>
+          Outcome — Achieved
+        </div>
+      </div>
+
+      <div class="fan-card fan-c2" data-index="1">
+        <div class="fc-band"></div>
+        <div class="fc-body">
+          <div class="fc-phase">Workflow</div>
+          <span class="fc-num">02</span>
+          <div class="fc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5H21M17.5 14V21"/></svg>
+          </div>
+          <div class="fc-name">Simplify Kitchen Purchasing</div>
+          <p class="fc-desc">Starfruit Oasis gives your team one place to compare options, place orders, and cut through the <em>scattered texts, calls, and emails</em> that slow prep and purchasing down.</p>
+        </div>
+        <div class="fc-footer">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7L5.5 10L11.5 4"/></svg>
+          Outcome — Achieved
+        </div>
+      </div>
+
+      <div class="fan-card fan-c3" data-index="2">
+        <div class="fc-band"></div>
+        <div class="fc-body">
+          <div class="fc-phase">Fulfillment</div>
+          <span class="fc-num">03</span>
+          <div class="fc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="15" height="13" rx="1.5"/><path d="M16 10h3l4 4v5h-7V10Z"/><circle cx="5.5" cy="20" r="2"/><circle cx="18.5" cy="20" r="2"/></svg>
+          </div>
+          <div class="fc-name">Reliable Cold Delivery</div>
+          <p class="fc-desc">Starfruit handles <strong>refrigerated pickup</strong>, delivery coordination, and <strong>cold-chain handling</strong> built around freshness your kitchen can trust.</p>
+        </div>
+        <div class="fc-footer">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7L5.5 10L11.5 4"/></svg>
+          Outcome — Achieved
+        </div>
+      </div>
+
+      <div class="fan-card fan-c4" data-index="3">
+        <div class="fc-band"></div>
+        <div class="fc-body">
+          <div class="fc-phase">Premium Backup</div>
+          <span class="fc-num">04</span>
+          <div class="fc-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ec-pill"><span class="ec-dot"></span>Coming Soon</div>
+          <div class="fc-name">Emergency Cold Deliveries</div>
+          <p class="fc-desc">When the other guy comes short, Starfruit keeps your kitchen moving — even when South Florida weather disrupts supply. <strong>At half the cost</strong> restaurants are used to paying.</p>
+          <div class="ec-labels">
+            <span class="ec-label">SFE</span>
+            <span class="ec-label">Cold-Chain</span>
+            <span class="ec-label">Backup</span>
+          </div>
+        </div>
+        <div class="fc-footer">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7.5L9 9"/></svg>
+          Coming Soon
+        </div>
+      </div>
+
+    </div>
+
+    <p class="fan-hint">Tap a card to bring it forward</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  function easeOut(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t) }
+
+  /* Count-up */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    if(isNaN(target)) return;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduced){ el.textContent = target.toLocaleString() + suffix; return }
+    var dur = 1400, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = Math.round(target * easeOut(p)).toLocaleString() + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* Savings counter */
+  var savEl = document.getElementById('savingsVal');
+  function animateSavings(){
+    if(reduced){ savEl.textContent = '$18,746'; return }
+    var target = 18746, dur = 1600, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      savEl.textContent = '$' + Math.round(target * easeOut(p)).toLocaleString();
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* Intersection observers for count-up */
+  var counts = document.querySelectorAll('[data-count]');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ animateCount(e.target); io.unobserve(e.target) }
+    });
+  }, { threshold: 0.4 });
+  counts.forEach(function(el){ io.observe(el) });
+
+  var sio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ animateSavings(); sio.unobserve(e.target) }
+    });
+  }, { threshold: 0.3 });
+  sio.observe(savEl);
+
+  /* Sparkline draw-in */
+  var spark = document.getElementById('sparkLine');
+  if(spark && !reduced){ setTimeout(function(){ spark.classList.add('drawn') }, 300) }
+  else if(spark){ spark.style.strokeDashoffset = '0' }
+
+  /* Mobile badge rearrangement */
+  function handleMobile(){
+    var isMobile = window.innerWidth <= 900;
+    var topDiv = document.getElementById('badgesTop');
+    var botDiv = document.getElementById('badgesBottom');
+    var allBadges = document.querySelectorAll('.badge');
+    if(isMobile){
+      topDiv.style.display = 'flex'; botDiv.style.display = 'flex';
+      allBadges.forEach(function(b, i){
+        b.style.position = 'relative';
+        b.style.top = b.style.left = b.style.right = b.style.bottom = 'auto';
+        b.style.transform = 'none';
+        if(i < 2){ topDiv.appendChild(b) } else { botDiv.appendChild(b) }
+      });
+    } else {
+      topDiv.style.display = 'none'; botDiv.style.display = 'none';
+      allBadges.forEach(function(b){ b.style.position = 'absolute'; b.style.transform = '' });
+      var visual = document.getElementById('heroVisual');
+      allBadges.forEach(function(b){ visual.insertBefore(b, document.getElementById('dashCard')) });
+    }
+  }
+  handleMobile();
+  window.addEventListener('resize', handleMobile);
+
+  /* Dashboard card tilt */
+  var visual = document.getElementById('heroVisual');
+  var card = document.getElementById('dashCard');
+  if(visual && card && !reduced && window.matchMedia('(min-width:901px)').matches){
+    visual.addEventListener('mousemove', function(e){
+      var r = visual.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width;
+      var y = (e.clientY - r.top) / r.height;
+      card.style.transform = 'rotateX(' + ((0.5 - y) * 6).toFixed(2) + 'deg) rotateY(' + ((x - 0.5) * 6).toFixed(2) + 'deg)';
+    });
+    visual.addEventListener('mouseleave', function(){ card.style.transform = '' });
+  }
+
+  /* ── Fan flashcard logic ── */
+  var fanCards = Array.from(document.querySelectorAll('.fan-card'));
+  var activeIdx = 2;
+
+  var baseConfigs = [
+    { rotate: -22, tx: -310, ty: 32,  z: 1 },
+    { rotate: -10, tx: -155, ty: 12,  z: 3 },
+    { rotate:   0, tx:    0, ty: -16, z: 10 },
+    { rotate:  11, tx:  155, ty: 12,  z: 3 }
+  ];
+
+  var configs = baseConfigs.map(function(c){ return Object.assign({}, c) });
+
+  function applyStates(){
+    fanCards.forEach(function(card, i){
+      var cfg = configs[i];
+      var isActive = i === activeIdx;
+      card.style.transform = 'rotate('+cfg.rotate+'deg) translateX('+cfg.tx+'px) translateY('+cfg.ty+'px)';
+      card.style.zIndex    = isActive ? 20 : cfg.z;
+      card.style.filter    = isActive ? 'blur(0px)' : 'blur(3.5px)';
+      card.style.opacity   = isActive ? '1' : '0.72';
+      card.style.boxShadow = isActive
+        ? '0 24px 56px -12px rgba(22,30,23,0.24), 0 6px 18px -6px rgba(22,30,23,0.12)'
+        : '0 4px 14px rgba(22,30,23,0.07)';
+    });
+  }
+
+  function bringToCenter(clickedIdx){
+    if(clickedIdx === activeIdx) return;
+    var diff = clickedIdx - activeIdx;
+    var newConfigs = configs.map(function(c, i){
+      var ni = ((i - diff) % 4 + 4) % 4;
+      return Object.assign({}, configs[ni]);
+    });
+    configs = newConfigs;
+    activeIdx = clickedIdx;
+    applyStates();
+  }
+
+  fanCards.forEach(function(card, i){
+    card.addEventListener('click', function(){ bringToCenter(i) });
+    card.addEventListener('mouseenter', function(){
+      if(i === activeIdx) return;
+      card.style.filter  = 'blur(0px)';
+      card.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', function(){
+      if(i === activeIdx) return;
+      card.style.filter  = 'blur(3.5px)';
+      card.style.opacity = '0.72';
+    });
+  });
+
+  applyStates();
+
+})();
+</script>
+
+</body>
+</html>
