@@ -128,11 +128,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .shipment-text span{font-size:0.7rem;color:#6B6358}
 .shipment-link{font-size:0.75rem;font-weight:700;color:#1E7245;white-space:nowrap}
 
-/* FLOATING BADGES */
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@keyframes badgeFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.badge{position:absolute;display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.95rem 0.5rem 0.4rem;background:#fff;border:none;border-radius:999px;box-shadow:0 8px 24px -6px rgba(16,29,27,0.16),0 2px 6px -2px rgba(16,29,27,0.08);font-size:0.74rem;font-weight:700;color:#211F1A;white-space:nowrap;z-index:5;cursor:default;opacity:0;animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) forwards, float 5s ease-in-out infinite;transition:box-shadow 0.25s ease}
-.badge:hover{box-shadow:0 10px 28px -6px rgba(16,29,27,0.20)}
+/* FLOATING BADGES — BASE (desktop) */
+@keyframes float{0%,100%{transform:translate(var(--bx,0),var(--by,0))}50%{transform:translate(var(--bx,0),calc(var(--by,0) - 7px))}}
+@keyframes badgeFadeIn{from{opacity:0;transform:translate(var(--bx,0),calc(var(--by,0) + 10px))}to{opacity:1;transform:translate(var(--bx,0),var(--by,0))}}
+.badge{position:absolute;display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 0.95rem 0.5rem 0.4rem;background:#fff;border:none;border-radius:999px;box-shadow:0 8px 24px -6px rgba(16,29,27,0.16),0 2px 6px -2px rgba(16,29,27,0.08);font-size:0.74rem;font-weight:700;color:#211F1A;white-space:nowrap;z-index:3;cursor:default;opacity:0;animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) forwards, float 5s ease-in-out infinite;transition:box-shadow 0.25s ease}
+.badge:hover{box-shadow:0 10px 28px -6px rgba(16,29,27,0.20);animation-play-state:running,paused}
 .badge-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .badge-dot svg{width:13px;height:13px}
 .badge-green .badge-dot{background:#fff;color:#1E7245;box-shadow:inset 0 0 0 1px rgba(30,114,69,0.18)}
@@ -140,15 +140,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .badge-navy  .badge-dot{background:#fff;color:#1A3A5C;box-shadow:inset 0 0 0 1px rgba(26,58,92,0.18)}
 .badge-teal  .badge-dot{background:#fff;color:#1A7A62;box-shadow:inset 0 0 0 1px rgba(26,122,98,0.18)}
 
-/* Desktop: badges overlap the card edges — anchored to hero-visual */
-/* Badge 1 (Smart Procurement): top edge of card, slightly left-of-center */
-.badge-1{top:4%;left:50%;transform:translateX(-80%);animation-delay:0.10s,0.80s}
-/* Badge 2 (Cost Savings): left edge of card, upper third */
-.badge-2{top:22%;left:50%;transform:translateX(-120%);animation-delay:0.25s,0.80s}
-/* Badge 3 (Fast Delivery): right edge of card, upper third */
-.badge-3{top:22%;right:50%;transform:translateX(120%);animation-delay:0.40s,0.80s}
-/* Badge 4 (Cold Chain): bottom edge of card, slightly right */
-.badge-4{bottom:6%;right:50%;transform:translateX(90%);animation-delay:0.55s,0.80s}
+/* Desktop badge positions */
+.badge-1{top:2%;left:6%;--bx:-38%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-2{top:42%;left:0;--bx:-58%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-3{top:2%;right:6%;--bx:42%;--by:-50%;transform:translate(var(--bx),var(--by))}
+.badge-4{bottom:6%;right:4%;--bx:38%;--by:50%;transform:translate(var(--bx),var(--by))}
+.badge-1{animation-delay:0.10s,0.80s}
+.badge-2{animation-delay:0.25s,0.80s}
+.badge-3{animation-delay:0.40s,0.80s}
+.badge-4{animation-delay:0.55s,0.80s}
 
 /* STATS BAR */
 .stats-bar{padding:0 2rem 4rem;margin-top:-1rem;position:relative;z-index:2}
@@ -161,7 +161,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .stat-label{font-size:0.76rem;color:#6B6358;margin-top:0.2rem}
 
 /* ─────────────────────────────────────────
-   HERO RESPONSIVE  — mobile-only fixes
+   HERO RESPONSIVE
 ───────────────────────────────────────── */
 @media(max-width:1080px){.badge-1,.badge-2{left:-2%}.badge-3,.badge-4{right:-2%}}
 
@@ -171,43 +171,63 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .hero-inner{grid-template-columns:1fr;gap:2rem;margin-top:0.75rem}
   .hero-bg{width:100%;height:260px;top:auto;bottom:0}
 
-  /* Visual area: give enough room for floating badges around the card */
+  /* Visual area needs padding to give badges room on all sides */
   .hero-visual{
     min-height:auto;
-    padding:3.5rem 0.5rem;
+    padding:4.5rem 3.5rem;   /* top/bottom for badge-1 & badge-4; left/right for badge-2 & badge-3 */
     position:relative;
     display:flex;
     justify-content:center;
     align-items:center;
   }
 
-  /* Keep badges absolutely positioned — reanchor them to card corners */
-  /* Badge 1: top-left */
-  .badge-1{
-    top:0.5rem; left:0;
-    --bx:0; --by:0;
+  /* ── Mobile badge positions ──
+     Reference layout (from screenshot):
+       badge-1 (Smart Procurement) → top-right, overlapping card top-right corner
+       badge-2 (Cost Savings)      → left-middle, sticking out to the left
+       badge-3 (Fast Delivery)     → left side, lower-middle, sticking out left
+       badge-4 (Cold Chain)        → bottom-right, sticking out right
+  */
+
+  /* Reset all desktop transform tricks */
+  .badge-1,.badge-2,.badge-3,.badge-4{
+    --bx:0;--by:0;
     transform:none;
+  }
+
+  /* badge-1: top-right, partially outside card */
+  .badge-1{
+    top:-1rem;
+    right:-0.75rem;
+    left:auto;
+    bottom:auto;
     animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.10s forwards, float 5s ease-in-out 0.80s infinite !important;
   }
-  /* Badge 2: bottom-left */
+
+  /* badge-2: left side, upper-middle */
   .badge-2{
-    top:auto; bottom:0.5rem; left:0;
-    --bx:0; --by:0;
-    transform:none;
+    top:28%;
+    left:-0.75rem;
+    right:auto;
+    bottom:auto;
     animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.25s forwards, float 5s ease-in-out 0.80s infinite !important;
   }
-  /* Badge 3: top-right */
+
+  /* badge-3: left side, lower-middle */
   .badge-3{
-    top:0.5rem; right:0; left:auto;
-    --bx:0; --by:0;
-    transform:none;
+    top:58%;
+    left:-0.75rem;
+    right:auto;
+    bottom:auto;
     animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.40s forwards, float 5s ease-in-out 0.80s infinite !important;
   }
-  /* Badge 4: bottom-right */
+
+  /* badge-4: bottom-right, partially outside card */
   .badge-4{
-    top:auto; bottom:0.5rem; right:0; left:auto;
-    --bx:0; --by:0;
-    transform:none;
+    bottom:-1rem;
+    right:-0.75rem;
+    left:auto;
+    top:auto;
     animation:badgeFadeIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.55s forwards, float 5s ease-in-out 0.80s infinite !important;
   }
 
@@ -226,8 +246,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .nav{padding:0.5rem 0.5rem 0.5rem 0.85rem;gap:0.6rem}
   .hero{padding:2rem 1rem 2.5rem}
 
-  /* Badges: shrink slightly and keep float effect */
-  .hero-visual{padding:3rem 0.25rem}
+  /* Slightly tighter padding but keep room for badges */
+  .hero-visual{padding:4rem 3rem}
+
   .badge{font-size:0.65rem;padding:0.38rem 0.7rem 0.38rem 0.3rem}
   .badge-dot{width:20px;height:20px}
   .badge-dot svg{width:10px;height:10px}
@@ -491,7 +512,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
 .fan-hint{text-align:center;font-size:0.72rem;color:#978E7E;letter-spacing:0.04em;margin-top:0.5rem}
 
-/* HIW mobile: keep fan layout, JS scales the offsets to fit narrow screens */
 @media(max-width:680px){
   .hiw{padding:3rem 1rem 3.5rem}
   .hiw-sub{margin-bottom:2rem}
@@ -521,9 +541,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     NAV
-══════════════════════════════════════ -->
+<!-- NAV -->
 <header class="site-header">
   <nav class="nav">
     <a href="#" class="logo">
@@ -573,9 +591,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   </div>
 </header>
 
-<!-- ══════════════════════════════════════
-     HERO
-══════════════════════════════════════ -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
     <div class="hero-bg-img"></div>
@@ -635,18 +651,22 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     </div>
 
     <div class="hero-visual" id="heroVisual">
+      <!-- badge-1: top-right -->
       <div class="badge badge-1 badge-green" aria-hidden="true">
         <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 9L5 6L7 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         Smart Procurement
       </div>
+      <!-- badge-2: left side, upper-middle -->
       <div class="badge badge-2 badge-amber" aria-hidden="true">
         <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M6 3.5V8.5M4.5 7C4.5 7.5 5.2 8 6 8C6.8 8 7.5 7.5 7.5 7C7.5 5.8 4.5 6.2 4.5 5C4.5 4.5 5.2 4 6 4C6.6 4 7.2 4.3 7.5 4.7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></span>
         Cost Savings
       </div>
+      <!-- badge-3: left side, lower-middle -->
       <div class="badge badge-3 badge-navy" aria-hidden="true">
         <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><rect x="1" y="4" width="7" height="6" rx="0.8" stroke="currentColor" stroke-width="1.2"/><path d="M8 5.5H9.5L11 7.5V10H8V5.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><circle cx="3" cy="11" r="1.2" fill="currentColor"/><circle cx="9.5" cy="11" r="1.2" fill="currentColor"/></svg></span>
         Fast Delivery
       </div>
+      <!-- badge-4: bottom-right -->
       <div class="badge badge-4 badge-teal" aria-hidden="true">
         <span class="badge-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1V11M1 6H11M3.5 3.5L8.5 8.5M8.5 3.5L3.5 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>
         Cold Chain
@@ -705,7 +725,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <a href="#" class="shipment-link">Track Order →</a>
         </div>
       </div>
-    </div><!-- /.hero-visual -->
+    </div>
   </div>
 </section>
 
@@ -743,9 +763,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PROBLEM SECTION
-══════════════════════════════════════ -->
+<!-- PROBLEM SECTION -->
 <section class="problems">
   <div class="problems-inner">
     <div class="section-header">
@@ -882,9 +900,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     HOW IT WORKS — FAN FLASHCARDS
-══════════════════════════════════════ -->
+<!-- HOW IT WORKS -->
 <section class="hiw">
   <div class="hiw-inner">
     <div class="hiw-header">
@@ -894,7 +910,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     </div>
 
     <div class="fan-stage" id="fanStage">
-
       <div class="fan-card fan-c1" data-index="0">
         <div class="fc-band"></div>
         <div class="fc-body">
@@ -968,16 +983,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           Coming Soon
         </div>
       </div>
-
     </div>
 
     <p class="fan-hint">Tap a card to bring it forward</p>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════ -->
 <script>
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -1002,7 +1013,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 
   function easeOut(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t) }
 
-  /* Count-up */
   function animateCount(el){
     var target = parseFloat(el.getAttribute('data-count'));
     if(isNaN(target)) return;
@@ -1018,7 +1028,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     requestAnimationFrame(step);
   }
 
-  /* Savings counter */
   var savEl = document.getElementById('savingsVal');
   function animateSavings(){
     if(reduced){ savEl.textContent = '$18,746'; return }
@@ -1032,7 +1041,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     requestAnimationFrame(step);
   }
 
-  /* Intersection observers for count-up */
   var counts = document.querySelectorAll('[data-count]');
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -1048,15 +1056,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   }, { threshold: 0.3 });
   sio.observe(savEl);
 
-  /* Sparkline draw-in */
   var spark = document.getElementById('sparkLine');
   if(spark && !reduced){ setTimeout(function(){ spark.classList.add('drawn') }, 300) }
   else if(spark){ spark.style.strokeDashoffset = '0' }
 
-  /* Badges stay in .hero-visual as absolute elements on all screen sizes.
-     CSS media queries reposition them — no JS DOM moves needed. */
-
-  /* Dashboard card tilt */
   var visual = document.getElementById('heroVisual');
   var card = document.getElementById('dashCard');
   if(visual && card && !reduced && window.matchMedia('(min-width:901px)').matches){
@@ -1069,12 +1072,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     visual.addEventListener('mouseleave', function(){ card.style.transform = '' });
   }
 
-  /* ── Fan flashcard logic — works on all screen sizes ── */
+  /* Fan flashcard logic */
   var fanCards = Array.from(document.querySelectorAll('.fan-card'));
   var activeIdx = 2;
 
-  /* Base configs are for a ~1100px container.
-     tx values get scaled to the actual stage width at runtime. */
   var baseConfigs = [
     { rotate: -22, txBase: -310, ty: 32,  z: 1 },
     { rotate: -10, txBase: -155, ty: 12,  z: 3 },
@@ -1088,8 +1089,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     var stage = document.getElementById('fanStage');
     if(!stage) return 1;
     var w = stage.offsetWidth;
-    /* 1100px is the design reference width. Scale down proportionally,
-       but never go below 0.38 so cards stay visibly fanned. */
     return Math.max(0.38, Math.min(1, w / 1100));
   }
 
